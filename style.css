@@ -98,7 +98,8 @@ body {
 }
 
 .badge {
-  display: inline-block;
+  display: block;
+  width: fit-content;
   background: var(--accent-lt);
   color: var(--accent);
   font-family: 'Nunito', sans-serif;

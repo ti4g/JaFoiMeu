@@ -71,19 +71,6 @@ const products = [
     ],
   },
   {
-    name: 'Smartwatch Xiaomi Band 8',
-    cat: 'eletronico',
-    catLabel: 'Eletrônico',
-    price: 'R$ 149',
-    condition: 'Novo',
-    tag: 'Novo',
-    desc: 'Mi Band 8 lacrada na caixa. Monitor cardíaco, SpO2, 16 modos esportivos. Na caixa com nota fiscal.',
-    images: [
-      'https://images.unsplash.com/photo-1523475496153-3c4e6bf84476?w=700&q=80',
-      'https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=700&q=80',
-    ],
-  },
-  {
     name: 'Carregador Turbo 65W',
     cat: 'eletronico',
     catLabel: 'Eletrônico',
