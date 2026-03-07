@@ -100,7 +100,6 @@ function renderCards(filter = "todos") {
               <span class="new-price">${p.price}</span>
             </div>
             </div>
-          <p class="item-desc">${p.desc}</p>
         </div>
         <div class="item-footer">
           <span class="item-condition">🏷 ${p.condition}</span>
