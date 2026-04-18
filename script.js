@@ -79,7 +79,7 @@ function renderCards(filter = "todos") {
           p.images.length > 1
             ? `
           <span class="item-photo-count">
-            <svg width="10" height="10" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
               <polyline points="21 15 16 10 5 21"/>
             </svg>
@@ -89,22 +89,16 @@ function renderCards(filter = "todos") {
         }
       </div>
       <div class="item-content">
-        <div>
-          <div class="item-header">
-            <div>
-              <p class="item-cat">${p.catLabel}</p>
-              <p class="item-name">${p.name}</p>
-            </div>
-            <div class="item-price">
-              ${p.oldPrice ? `<span class="old-price">${p.oldPrice}</span>` : ""}
-              <span class="new-price">${p.price}</span>
-            </div>
-            </div>
-        </div>
+        <span class="item-cat">${p.catLabel}</span>
+        <h3 class="item-name">${p.name}</h3>
         <div class="item-footer">
-          <span class="item-condition">🏷 ${p.condition}</span>
-          <button class="btn-ver">Ver detalhes</button>
+          <span class="item-condition">${p.condition}</span>
+          <div class="item-price-wrap">
+            ${p.oldPrice ? `<div class="old-price">${p.oldPrice}</div>` : ""}
+            <div class="new-price">${p.price}</div>
+          </div>
         </div>
+        <button class="btn-ver">Ver imagens e detalhes</button>
       </div>
     `;
 
@@ -169,8 +163,11 @@ function openModal(i) {
 
   document.getElementById("modalCat").textContent = p.catLabel;
   document.getElementById("modalName").textContent = p.name;
-  document.getElementById("modalPrice").textContent = p.price;
-  document.getElementById("modalCondition").textContent = `🏷 ${p.condition}`;
+  document.getElementById("modalPriceWrap").innerHTML = `
+    ${p.oldPrice ? `<div class="old-price">${p.oldPrice}</div>` : ""}
+    <div class="new-price">${p.price}</div>
+  `;
+  document.getElementById("modalCondition").textContent = p.condition;
   document.getElementById('modalDesc').innerText = p.desc;
 
   const msg = encodeURIComponent(
@@ -259,8 +256,37 @@ document.addEventListener("keydown", (e) => {
 });
 
 /* ══════════════════════════════════════
-   INIT
+   INIT & THEME TOGGLE
    ══════════════════════════════════════ */
 renderCards();
-document.getElementById("statTotal").textContent = products.length;
-document.getElementById("footerYear").textContent = new Date().getFullYear();
+if (document.getElementById("footerYear")) {
+  document.getElementById("footerYear").textContent = new Date().getFullYear();
+}
+
+const themeToggleBtn = document.getElementById("themeToggle");
+const moonIcon = document.getElementById("moonIcon");
+const sunIcon = document.getElementById("sunIcon");
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('jafoimeu-theme', theme);
+  
+  if (theme === 'light') {
+    if (moonIcon) moonIcon.style.display = 'none';
+    if (sunIcon) sunIcon.style.display = 'block';
+  } else {
+    if (moonIcon) moonIcon.style.display = 'block';
+    if (sunIcon) sunIcon.style.display = 'none';
+  }
+}
+
+// Inicializar tema
+const savedTheme = localStorage.getItem('jafoimeu-theme') || 'dark';
+applyTheme(savedTheme);
+
+if (themeToggleBtn) {
+  themeToggleBtn.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme');
+    applyTheme(current === 'light' ? 'dark' : 'light');
+  });
+}
